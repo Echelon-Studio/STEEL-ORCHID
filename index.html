@@ -1,14 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>PROJECT: STEELORCHID</title>
-    <link  href="css/main.css" rel="stylesheet"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>PROJECT: STEELORCHID</title>
+<link  href="css/pointerlock-demo.css" rel="stylesheet"/>
 </head>
 <body>
-    <script src="js/lib/three.min.js"></script>
-    <script src="js/demo/box-demo.js"></script>
+  <script src="js/lib/three.min.js"></script>
+  <!--
+  <script src="js/demo/box-demo.js"></script>
+  <script src="js/app/config.js"></script>
+  <script src="js/app/movement.js"></script>
+  <script src="js/demo/pointerlock.js"></script>
+  <script src="js/demo/pointerlock-demo.js"></script>
+  -->
+  <script src="js/lib/PointerLockControls.js"></script>
+
+  <div id="blocker">
+
+    <div id="instructions">
+      <span style="font-size:40px"></span>
+    </div>
+
+  </div>
+
+  <script src="js/demo/pointerlock.js"></script>
+  <script src="js/app/planet.js"></script>
+  <script src="js/app/animate.js"></script>
+  <script src="js/app/config.js"></script>
+  <script src="js/app/movement.js"></script>
+  <script src="js/app/main.js"></script>
 </body>
 </html>
