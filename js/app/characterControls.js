@@ -1,7 +1,7 @@
 'use strict';
 
 
-const SPEED = 50.0;
+const SPEED = 1.0;
 const JUMP_VELOCITY = 35.0;
 
 class CharacterControls {
@@ -17,6 +17,7 @@ class CharacterControls {
     this.moveDown = false;
     this.velocity = new THREE.Vector3();
     this.direction = new THREE.Vector3();
+    this.cameraDirection = new THREE.Vector3();
   }
 
   onKeyDown (event) {
@@ -96,6 +97,9 @@ class CharacterControls {
       return;
     }
 
+    camera.getWorldDirection(this.cameraDirection);
+    var forward = this.cameraDirection;
+
     this.direction.z = Number(this.moveForward) - Number(this.moveBackward);
     this.direction.x = Number(this.moveLeft) - Number(this.moveRight);
     this.direction.y = Number(this.moveUp) - Number(this.moveDown);
@@ -103,24 +107,23 @@ class CharacterControls {
 
 
     if (this.moveForward || this.moveBackward) {
-      console.log("x axis movement")
-      this.velocity.z -= this.direction.z * SPEED * deltaTime;
+      this.velocity.add(forward.multiplyScalar(this.direction.z * SPEED * deltaTime));
     }
     if (this.moveLeft || this.moveRight) {
-      this.velocity.x -= this.direction.x * SPEED * deltaTime;
+      var vect = new THREE.Vector3(-1,0,0);
+      this.velocity.add(vect.applyQuaternion(this.cameraYaw.quaternion).multiplyScalar(this.direction.x * SPEED * deltaTime));
     }
-
     if (this.moveUp || this.moveDown) {
-      this.velocity.y -= -this.direction.y * SPEED * deltaTime;
+      var vect = new THREE.Vector3(0,1,0);
+      this.velocity.add(vect.applyQuaternion(camera.quaternion).multiplyScalar(this.direction.y * SPEED * deltaTime));
     }
 
-    this.cameraYaw.translateX(this.velocity.x);
-    this.cameraYaw.translateY(this.velocity.y);
-    this.cameraYaw.translateZ(this.velocity.z);
 
-    this.velocity.x -= Math.sign(this.velocity.x) * Math.min(Math.abs(this.velocity.x) * deltaTime, SPEED * deltaTime);
-    this.velocity.y -= Math.sign(this.velocity.y) * Math.min(Math.abs(this.velocity.y) * deltaTime, SPEED * deltaTime);
-    this.velocity.z -= Math.sign(this.velocity.z) * Math.min(Math.abs(this.velocity.z) * deltaTime, SPEED * deltaTime);
+    this.cameraYaw.position.set(
+      this.cameraYaw.position.x + this.velocity.x,
+      this.cameraYaw.position.y + this.velocity.y,
+      this.cameraYaw.position.z + this.velocity.z
+    );
 
   }
 }
