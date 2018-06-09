@@ -20,79 +20,90 @@ class CharacterControls {
     this.cameraDirection = new THREE.Vector3();
   }
 
-  onKeyDown (event) {
-    console.log("onkeydown " + event.keyCode);
-      switch (event.keyCode) {
-          case 38: // up
-          case 87: // w
-            console.log(this)
-            console.log(this.moveforward)
-            this.moveForward = true;
-            break;
-          case 37: // left
-          case 65: // a
-            this.moveLeft = true;
-            break;
-          case 40: // down
-          case 83: // s
-            this.moveBackward = true;
-            break;
-          case 39: // right
-          case 68: // d
-            this.moveRight = true;
-            break;
-          case 16: // shift
-            this.moveUp = true;
-            break;
-          case 17: // control
-            this.moveDown = true;
-            break
-          case 32: // space
-            if (this.canJump === true) this.velocity.y += JUMP_VELOCITY;
-            this.canJump = false;
-            break;
-      }
-  };
+  onKeyDown(event) {
+    switch (event.keyCode) {
+      case 38: // up
+      case 87: // w
+        this.moveForward = true;
+        event.preventDefault();
+        return false;
+      case 37: // left
+      case 65: // a
+        this.moveLeft = true;
+        event.preventDefault();
+        return false;
+      case 40: // down
+      case 83: // s
+        this.moveBackward = true;
+        event.preventDefault();
+        return false;
+      case 39: // right
+      case 68: // d
+        this.moveRight = true;
+        event.preventDefault();
+        return false;
+      case 16: // shift
+        this.moveUp = true;
+        event.preventDefault();
+        return false;
+      case 17: // control
+        this.moveDown = true;
+        event.preventDefault();
+        break
+      case 32: // space
+        if (this.canJump === true) this.velocity.y += JUMP_VELOCITY;
+        this.canJump = false;
+        event.preventDefault();
+        return false;
+    }
+  }
 
-  onKeyUp (event) {
-    console.log("onkeyup " + event.keyCode);
-      switch (event.keyCode) {
-          case 38: // up
-          case 87: // w
-              console.log(this)
-              console.log(this.moveforward)
-              this.moveForward = false;
-              break;
-          case 37: // left
-          case 65: // a
-              this.moveLeft = false;
-              break;
-          case 40: // down
-          case 83: // s
-              this.moveBackward = false;
-              break;
-          case 39: // right
-          case 68: // d
-              this.moveRight = false;
-              break;
-          case 16: // shift
-            this.moveUp = false;
-            break;
-          case 17: // control
-            this.moveDown = false;
-            break
-      }
-  };
+  onKeyUp(event) {
+    switch (event.keyCode) {
+      case 38: // up
+      case 87: // w
+        this.moveForward = false;
+        event.preventDefault();
+        return false;
+      case 37: // left
+      case 65: // a
+        this.moveLeft = false;
+        event.preventDefault();
+        return false;
+      case 40: // down
+      case 83: // s
+        this.moveBackward = false;
+        event.preventDefault();
+        return false;
+      case 39: // right
+      case 68: // d
+        this.moveRight = false;
+        event.preventDefault();
+        return false;
+      case 16: // shift
+        this.moveUp = false;
+        event.preventDefault();
+        return false;
+      case 17: // control
+        this.moveDown = false;
+        event.preventDefault();
+        return false;
+    }
+  }
 
 
-  registerKeyEvents(){
+  registerKeyEvents() {
     var x = this;
-    document.addEventListener('keydown', function(event) { x.onKeyDown(event) }, false);
-    document.addEventListener('keyup', function(event) { x.onKeyUp(event) }, false);
+    document.addEventListener('keydown', function(event) {
+      x.onKeyDown(event)
+    }, false);
+    document.addEventListener('keyup', function(event) {
+      x.onKeyUp(event)
+    }, false);
     console.log("key events registered");
   }
 
-  update(deltaTime){
+  update(deltaTime) {
     if (!this.controlsEnabled) {
       return;
     }
@@ -110,11 +121,11 @@ class CharacterControls {
       this.velocity.add(forward.multiplyScalar(this.direction.z * SPEED * deltaTime));
     }
     if (this.moveLeft || this.moveRight) {
-      var vect = new THREE.Vector3(-1,0,0);
+      var vect = new THREE.Vector3(-1, 0, 0);
       this.velocity.add(vect.applyQuaternion(this.cameraYaw.quaternion).multiplyScalar(this.direction.x * SPEED * deltaTime));
     }
     if (this.moveUp || this.moveDown) {
-      var vect = new THREE.Vector3(0,1,0);
+      var vect = new THREE.Vector3(0, 1, 0);
       this.velocity.add(vect.applyQuaternion(camera.quaternion).multiplyScalar(this.direction.y * SPEED * deltaTime));
     }
 
