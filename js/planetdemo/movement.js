@@ -1,8 +1,7 @@
-var movement = function () {
-	
-	var onKeyDown = function (event) {
-		switch (event.keyCode) {
-			case Controls.movement.forward: // w
+(function () {
+  var onKeyDown = function (event) {
+    switch (event.keyCode) {
+      case Controls.movement.forward: // w
 				moveForward = true;
 				break;
 			case Controls.movement.left: // a
@@ -25,7 +24,8 @@ var movement = function () {
 				moveForward = false;
 				break;
 			case Controls.movement.left: // a
-				moveLeft = false; break;
+				moveLeft = false;
+        break;
 			case Controls.movement.backward: // s
 				moveBackward = false;
 				break;
@@ -36,5 +36,4 @@ var movement = function () {
 	};
 	document.addEventListener('keydown', onKeyDown, false);
 	document.addEventListener('keyup', onKeyUp, false);
-}();
-
+})();
